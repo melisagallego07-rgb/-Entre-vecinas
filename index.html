@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entre vecinas: campaña de educación para la salud</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F8FB; --surface:#FFFFFF; --ink:#16293A; --muted:#4F6577; --line:#D3E1EA;
+  --accent:#1F5F8B; --on-accent:#FFFFFF; --sun:#F2B632; --sun-soft:#FFF3D1;
+  --font:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif; --size:18px;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#0F1A24;--surface:#17283A;--ink:#EAF2F8;--muted:#A6BCCC;--line:#2A4258;--accent:#7DB8E0;--on-accent:#0F1A24;--sun:#F2B632;--sun-soft:#3A3115}
+}
+:root[data-theme="dark"]{--bg:#0F1A24;--surface:#17283A;--ink:#EAF2F8;--muted:#A6BCCC;--line:#2A4258;--accent:#7DB8E0;--on-accent:#0F1A24;--sun:#F2B632;--sun-soft:#3A3115}
+html.big{--size:22px}
+html.contrast{--bg:#000;--surface:#000;--ink:#fff;--muted:#fff;--line:#fff;--accent:#FFD93B;--on-accent:#000;--sun-soft:#000}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 var(--size)/1.55 var(--font)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px 48px}
+h1,h2,h3{font-weight:800;line-height:1.2;margin:0}
+h1{font-size:1.9em}
+h2{font-size:1.35em;margin-bottom:.5rem}
+p{margin:0 0 .9rem}
+header{padding:28px 0 12px}
+header p{color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{font:inherit;cursor:pointer;min-height:48px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 16px;font-weight:600}
+button:focus-visible,a:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:10px 0;z-index:5}
+.tabs button{flex-direction:column;font-size:.8em;padding:6px 4px;line-height:1.2;display:flex;align-items:center;justify-content:center;gap:2px}
+.tabs button span{font-size:1.5em}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.panel[hidden]{display:none}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:22px}
+.card .icon{font-size:2.4em;line-height:1}
+.card h2{margin-top:.6rem}
+.ask{background:var(--sun-soft);border-left:6px solid var(--sun);border-radius:10px;padding:12px 16px;margin:1rem 0;font-weight:600}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px}
+.count{color:var(--muted);font-size:.85em}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+.chips button{text-align:left;display:flex;gap:8px;align-items:center}
+.msg{margin-top:12px;font-weight:600}
+.route{display:grid;gap:12px}
+.route .card{padding:16px 18px}
+.route h3{font-size:1.1em;margin-bottom:.25rem}
+.big-num{display:inline-block;background:var(--accent);color:var(--on-accent);border-radius:10px;padding:2px 12px;font-size:1.2em;font-weight:800}
+.todo{color:var(--muted);font-size:.85em}
+ol{padding-left:1.3rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+.beta{margin-top:24px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:.8em}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Entre vecinas</h1>
+  <p>Una campaña para conversar sobre cuidado, apoyo y salud en los corregimientos de Palmira. Aquí nadie da charlas: se conversa.</p>
+  <div class="tools">
+    <button id="bigBtn" aria-pressed="false">Letra grande</button>
+    <button id="conBtn" aria-pressed="false">Alto contraste</button>
+  </div>
+</header>
+
+<div class="tabs" role="tablist" aria-label="Secciones de la campaña">
+  <button role="tab" aria-selected="true" data-tab="t1"><span>💬</span>Conversemos</button>
+  <button role="tab" aria-selected="false" data-tab="t2"><span>🤝</span>Mi red</button>
+  <button role="tab" aria-selected="false" data-tab="t3"><span>📍</span>Pedir apoyo</button>
+  <button role="tab" aria-selected="false" data-tab="t4"><span>🪑</span>Para el círculo</button>
+</div>
+
+<main>
+<section id="t1" class="panel" role="tabpanel">
+  <div class="card" aria-live="polite">
+    <div class="icon" id="cIcon"></div>
+    <h2 id="cTitle"></h2>
+    <p id="cText"></p>
+    <div class="ask" id="cAsk"></div>
+    <button id="listen">🔊 Escuchar esta tarjeta</button>
+  </div>
+  <div class="nav">
+    <button id="prev">Anterior</button>
+    <span class="count" id="count"></span>
+    <button id="next">Siguiente</button>
+  </div>
+</section>
+
+<section id="t2" class="panel" role="tabpanel" hidden>
+  <h2>¿Con quién cuento?</h2>
+  <p>Toque las personas o lugares a los que acudiría si necesitara ayuda. Nada de esto se guarda ni se envía.</p>
+  <div class="chips" id="chips"></div>
+  <p class="msg" id="netMsg"></p>
+</section>
+
+<section id="t3" class="panel" role="tabpanel" hidden>
+  <h2>¿Dónde pedir apoyo?</h2>
+  <p>Si está en peligro ahora mismo, llame primero a emergencias.</p>
+  <div class="route">
+    <div class="card"><h3>Emergencia</h3><p><span class="big-num">123</span> Policía y ambulancia.</p></div>
+    <div class="card"><h3>Orientación si vive violencia</h3><p><span class="big-num">155</span> Línea nacional gratuita de orientación a mujeres víctimas de violencia.</p></div>
+    <div class="card"><h3>Comisaría de Familia de Palmira</h3><p>Atiende casos de violencia en la familia y puede dictar medidas de protección.</p><p class="todo">Por completar: dirección y teléfono, con la Alcaldía de Palmira.</p></div>
+    <div class="card"><h3>Puesto o centro de salud de su corregimiento</h3><p>Atención en salud, incluida la salud mental. Puede pedir que la atiendan con respeto y le expliquen con palabras claras.</p><p class="todo">Por completar: lista de puestos y horarios, con la Secretaría de Salud de Palmira.</p></div>
+  </div>
+</section>
+
+<section id="t4" class="panel" role="tabpanel" hidden>
+  <h2>Cómo hacer un círculo de conversación</h2>
+  <p>Guía para la mujer que acompaña el grupo, puede ser una lideresa, promotora o vecina.</p>
+  <ol>
+    <li><b>Acuerdos.</b> Lo que se dice se queda en el círculo. Nadie está obligada a hablar. Todas las experiencias valen.</li>
+    <li><b>Una tarjeta.</b> Lea una tarjeta de “Conversemos”, o póngala a escuchar.</li>
+    <li><b>Conversación.</b> Deje que hablen las demás. Pregunte, no explique. Los saberes del territorio son el punto de partida.</li>
+    <li><b>Lo que nos llevamos.</b> Cada una dice una idea o una acción que le sirve.</li>
+    <li><b>Nuestro mapa.</b> Revisen juntas “Mi red” y “Pedir apoyo” y completen los datos locales.</li>
+  </ol>
+  <div class="ask">Si alguien cuenta una situación de riesgo, no la presione ni la juzgue. Escuche, ofrézcale la información de “Pedir apoyo” y acompáñela si ella lo desea.</div>
+  <p>Esta campaña no reemplaza la atención profesional ni da diagnósticos.</p>
+</section>
+</main>
+
+<p class="beta">Prototipo beta, pendiente de validación con las comunidades y con la Secretaría de Salud de Palmira. Sin datos personales.</p>
+</div>
+
+<script>
+const cards=[
+ {i:"🌿",t:"¿Quién cuida de quien cuida?",x:"Muchas mujeres cuidan a los hijos, a los mayores, a la huerta y al hogar. Su salud también importa.",a:"¿Cuándo fue la última vez que alguien cuidó de usted?"},
+ {i:"📖",t:"Lo que ya sabemos",x:"Las mamás y las abuelas nos enseñaron formas de cuidar la salud. Esos saberes valen, y a veces se pueden combinar con la atención del puesto de salud.",a:"¿Qué prácticas de cuidado aprendió de su familia? ¿Cuáles todavía le sirven?"},
+ {i:"🏠",t:"Cuando la casa no se siente segura",x:"La violencia no es solo golpes. También son los gritos, las amenazas, el control del dinero o que no la dejen salir ni ver a su familia.",a:"¿Qué señales de este tipo reconocemos como comunidad? No hace falta contar casos propios."},
+ {i:"🛣️",t:"El camino hasta el servicio",x:"Llegar al puesto de salud puede ser difícil: distancia, transporte, horarios, pena o miedo a no ser escuchada.",a:"¿Qué le dificulta pedir atención? ¿Qué ayudaría a que fuera más fácil?"},
+ {i:"🤝",t:"Nuestra red",x:"Nadie se cuida sola. Una vecina, una lideresa o una promotora pueden ser un primer apoyo.",a:"¿A quién acudimos hoy? ¿A quién nos gustaría tener más cerca?"},
+ {i:"⚖️",t:"Nuestros derechos",x:"Tenemos derecho a que nos atiendan con respeto, nos expliquen con claridad y podamos decidir sobre nuestro cuerpo y nuestra salud.",a:"¿Cuándo nos hemos sentido bien o mal atendidas? ¿Qué cambiaríamos?"}
+];
+let n=0;
+const $=s=>document.querySelector(s);
+function show(){const c=cards[n];$("#cIcon").textContent=c.i;$("#cTitle").textContent=c.t;$("#cText").textContent=c.x;$("#cAsk").textContent=c.a;$("#count").textContent=(n+1)+" de "+cards.length;}
+$("#prev").onclick=()=>{n=(n-1+cards.length)%cards.length;show()};
+$("#next").onclick=()=>{n=(n+1)%cards.length;show()};
+$("#listen").onclick=()=>{
+  if(!("speechSynthesis" in window)){alert("Su navegador no tiene lectura en voz alta.");return}
+  speechSynthesis.cancel();
+  const c=cards[n];const u=new SpeechSynthesisUtterance(c.t+". "+c.x+" "+c.a);u.lang="es-CO";speechSynthesis.speak(u);
+};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  document.querySelectorAll(".panel").forEach(p=>p.hidden=p.id!==b.dataset.tab);
+  speechSynthesis&&speechSynthesis.cancel();
+});
+const people=["👩 Una vecina","👪 Una familiar","⭐ Una lideresa","🩺 La promotora de salud","📚 Una docente","⛪ Un grupo o iglesia","🏛️ La Comisaría de Familia","🏥 El puesto de salud"];
+const picked=new Set();
+const chips=$("#chips");
+people.forEach(p=>{const b=document.createElement("button");b.textContent=p;b.setAttribute("aria-pressed","false");
+  b.onclick=()=>{picked.has(p)?picked.delete(p):picked.add(p);b.setAttribute("aria-pressed",picked.has(p));net()};chips.appendChild(b)});
+function net(){const k=picked.size;
+  $("#netMsg").textContent=k===0?"":k===1?"Tiene 1 apoyo. Piense en una persona más a la que pueda acudir.":k+" apoyos. Su red es un recurso, cuídela y compártala con otras mujeres.";}
+function tog(id,cls){const b=$(id);b.onclick=()=>{const on=document.documentElement.classList.toggle(cls);b.setAttribute("aria-pressed",on)}}
+tog("#bigBtn","big");tog("#conBtn","contrast");
+show();
+</script>
+</body>
+</html>
